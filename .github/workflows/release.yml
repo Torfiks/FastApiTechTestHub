@@ -1,0 +1,39 @@
+name: Release Pipeline
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build_and_upload_artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Установка зависимостей и сборка проекта
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # Генерация OpenAPI спецификации
+      - name: Generate OpenAPI spec
+        run: |
+          cd backend
+
+
+      # Сохранение артефактов в релизе
+      - name: Upload artifacts to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./backend/openapi.json
+          asset_name: openapi.json
+          asset_content_type: application/json
