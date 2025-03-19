@@ -24,7 +24,7 @@ jobs:
       # Генерация OpenAPI спецификации
       - name: Generate OpenAPI spec
         run: |
-          cd backend
+          cd backend/app 
           uvicorn main:app --reload --log-level debug --log-config logging.conf &
           sleep 10
           curl http://localhost:8000/openapi.json > openapi.json
