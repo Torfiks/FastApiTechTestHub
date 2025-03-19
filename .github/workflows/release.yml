@@ -25,7 +25,7 @@ jobs:
       - name: Generate OpenAPI spec
         run: |
           cd backend
-          uvicorn main:app --reload --log-level debug --log-config logging.conf &
+          uvicorn app.main:app --reload --log-level debug --log-config logging.conf &
           sleep 10
           curl http://localhost:8000/openapi.json > openapi.json
           kill %1
